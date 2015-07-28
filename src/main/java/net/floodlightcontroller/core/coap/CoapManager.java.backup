@@ -1,0 +1,598 @@
+package net.floodlightcontroller.core.coap;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.floodlightcontroller.core.IFloodlightProviderService;
+import net.floodlightcontroller.core.coap.statsmanager.CoapDataManager;
+
+import net.floodlightcontroller.core.coap.structs.*;
+import net.floodlightcontroller.core.coap.util.CoapConstants;
+import net.floodlightcontroller.core.coap.util.CoapUtils;
+
+/**
+ * The CoapManager is the module that makes configuration related decisions for the COAP APs. 
+ * For COAP's deployment, a single instance of the COAP server can be used to manage all COAP 
+ * WiFi APs in a wireless neighborhood (e.g., an apartment building). The CoapManger can make
+ * configuration decisions for these COAP APs.
+ * 
+ * The COAPManager uses the wireless statistics collected by the StatsManager module to make
+ * AP configuration decisions. It is upto the administrators to define policies and create
+ * algorithms that generate configuration decisions for each COAP AP.
+ * 
+ * The benefit of this approach is that the COAP server can coalesce information collected from
+ * multiple COAP APs and make more informed configuration decisions for COAP compared to decisions
+ * made by APs based on local-only observations. Examples of AP configurations include: channel
+ * assignments, airtime management to mitigate interference and "context" information to 
+ * avoid interference (e.g., predicting non-WiFi activity and WiFi traffic).
+ * 
+ * It uses the ConfigManager module to transmit the configuration updates to the COAP APs.
+ * 
+ * This class contains a few examples that analyze the wireless activity to make decisions
+ * about COAP AP configuration (e.g., channel). Developer and administrators can use these
+ * examples to write their own functions. Please refer to our research paper for more details.
+ * 
+ * @author "Ashish Patro"
+ *
+ */
+public class CoapManager implements Runnable {
+	// Logger.
+	protected static Logger log = 
+			LoggerFactory.getLogger(CoapManager.class);
+
+	private long currTs, clearTs;
+	
+	// Store a local copy of wireless statistics for analysis required to make configuration decisions.
+	private HashMap<Integer, ArrayList<AirtimeUtilStat>> utilPolicyMap;
+	private HashMap<Integer, ArrayList<AirtimeUtilStat>> utilHopPolicyMap;
+	private HashMap<Integer, ArrayList<StationStatsPerClient>> stationStatsPolicyMap;
+	private HashMap<Integer, ArrayList<TrafficInfoPerClient>> trafficinfoPolicyMap;
+
+	// Store channel assignment information for COAP APs.
+	private HashMap<Integer, MutablePair<Integer, Long>> chanMap = 
+			new HashMap<Integer, MutablePair<Integer, Long>>();
+
+	// For debugging: Store list of channel assignments per COAP AP.
+	private HashMap<Integer, String> channelList;
+		
+	// Send configuration commands to APs using the ConfigManager module.
+	private ConfigManager apConfigurer;
+
+	@SuppressWarnings("unchecked")
+	public CoapManager(IFloodlightProviderService floodlightProvider) {
+		apConfigurer = new ConfigManager(floodlightProvider);
+
+		clearTs = System.currentTimeMillis() / 1000;
+
+		// Initialize channel list.
+		channelList = new HashMap<Integer, String>();
+
+		utilPolicyMap = (HashMap<Integer, ArrayList<AirtimeUtilStat>>) CoapDataManager.getUtilParser().getInMemoryHashMap();
+		utilHopPolicyMap = (HashMap<Integer, ArrayList<AirtimeUtilStat>>) CoapDataManager.getUtilHopParser().getInMemoryHashMap();
+		stationStatsPolicyMap = (HashMap<Integer, ArrayList<StationStatsPerClient>>) CoapDataManager.getStationStatsParser().getInMemoryHashMap();
+		trafficinfoPolicyMap = (HashMap<Integer, ArrayList<TrafficInfoPerClient>>) CoapDataManager.getTrafficInfoParser().getInMemoryHashMap();
+	}
+
+	@Override
+	public void run() {
+
+		/**
+		 * Run an infinite loop to periodically analyze the recent wireless statistics collected from the COAP
+		 * APs and make AP configuration decisions. In the following code, we provide the following examples
+		 * for leveraging COAP statistics to make configuration decisions:-
+		 * 
+		 * 1. Selecting the best WiFi channel based on recent airtime utilization information.
+		 * 2. Using non-WiFi activity information to make configure AP channel.
+		 * 3. TODO: Hidden terminal interference detection between WiFi links.
+		 * 4. Using WiFi activity information to apply the airtime management API to mitigate interference.
+		 * 
+		 */
+		while (true) {
+			try {
+				System.out.println("MIT: Going to sleep now.. " + System.currentTimeMillis() / 1000);
+				Thread.sleep(CoapConstants.MITIGATION_SLEEP_MS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("MIT: executing PolicyEngine in-memory");
+			long currTsSec = System.currentTimeMillis() / 1000;
+			currTs = currTsSec;
+
+			long diff = currTsSec - CoapDataManager.getMaxDataCommitTs();
+			diff = Math.max(diff, 0);
+			System.out.println("MIT: lag in data between AP and controller = " + diff);
+
+			// 0211: Removed the repeated reference update. Only printing the stats.
+			System.out.println("MIT: utilPolicyMap size: " + utilPolicyMap.keySet().size());
+			System.out.println("MIT: utilHopPolicyMap size: " + utilHopPolicyMap.keySet().size());
+			System.out.println("MIT: stationStatsPolicyMap size: " + stationStatsPolicyMap.keySet().size());
+			System.out.println("MIT: higherLayerPolicyMap size: " + trafficinfoPolicyMap.keySet().size());
+
+			/**
+			 * Each function below analyzes the statistics collected from the COAP APs and performs AP
+			 * configuration based on the policy.
+			 */
+			try {
+
+				/**
+				 *  Uses recent airtime utilization information from channels 1, 6 and 11 to configure the COAP
+				 *  AP to use the least utilized channel. For our current deployment, we use a secondary wireless
+				 *  card on each AP to estimate the airtime utilization on different channels for this purpose.
+				 *  The emulates the use of nearby COAP APs to estimate airtime utilization on different channels. 
+				 */
+				//utilHopAwareChannelConfiguration();
+				
+				// TODO: Add a bnew configuration function.
+				// if time > 1:20 pm and time < 1:40 pm, if channel != 6, set channel = 6.
+
+				
+				// if util > 40%, change channel to 11;
+				
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			/**
+			 * Periodically clear the in-memory statistics to bound the memory overhead.
+			 */
+			System.out.println("MIT: ClearMaps: " + CoapUtils.getCurrentTime() + " " +
+					"clear_ts: " + clearTs + " currTs: " + currTs);
+			
+			if (currTs - clearTs >= CoapConstants.INMEMORY_DATA_INTERVAL_SEC) {
+				
+				System.out.println("MIT: ClearMaps: " + CoapUtils.getCurrentTime() + "Clearing the in-memory data: clear_ts: " +
+						clearTs + " currTs: " + currTs);
+
+				clearTs = currTs;
+				int cleared = CoapDataManager.clearInMemoryData(currTs);
+				System.out.println("MIT: after clearing time:  " + CoapUtils.getCurrentTime() + ". Cleared " + cleared +  " entried from the data maps.");
+			}
+		}
+	}
+	
+	/**
+	 * Switch the input COAP AP's channel.
+	 * 
+	 * @param apId
+	 * @param setChannel
+	 * @param mode
+	 * 
+	 * @return Success/Failure status
+	 */
+	public boolean policySwitchAPChannel(int apId, int setChannel, String mode) {
+		boolean isSuccess = apConfigurer.SwitchChannel(apId, setChannel, mode, 
+				CoapConstants.IS_CHANNEL_MODE_11N);
+		MutablePair<Integer, Long> chEntry = chanMap.get(apId);
+
+		//boolean isSuccess = true;
+		if (isSuccess) {
+			System.out.println("MIT: nonwifi mitigation ap_id " + apId + " cmd send successful");
+
+			chEntry.fst = setChannel;
+			chEntry.snd = currTs;
+		} else {
+			System.out.println("MIT: nonwifi mitigation ap_id " + apId + " cmd send unsuccessful");
+		}
+
+		return isSuccess;
+	}
+
+	/**
+	 * Use the recent airtime utilization statistics across different channels to choose the least utilized channel per-AP.
+	 * 
+	 * To simulate the usage airtime utilization information from nearby APs on different channels, each COAP uses
+	 * a secondary wireless card to periodically hop across different channels in a round robin fashion (500 ms interval)
+	 * and collect the airtime utilization statistics for each channel.
+	 */
+	private void utilHopAwareChannelConfiguration() {
+		for (Integer currApid: utilPolicyMap.keySet()) {
+
+			long fromTsSec = System.currentTimeMillis() / 1000 - CoapConstants.UTIL_AVERAGE_INTERVAL_SEC;
+
+			// Don't do anything if we don't have any utilization information.
+			Pair<Double, Double> apUtilPair = GetCurrentAPUtil(currApid, fromTsSec);
+			int currFreq = getCurrentAPFreq(currApid);
+
+			if (apUtilPair == null || currFreq < 0) {
+				System.out.println("MIT: " + CoapUtils.getCurrentTime() + " ap_id " + currApid + " has no util entries, doing nothing...");
+				continue;
+			}
+
+			// Initializing the current channel map and debug channel list.
+			if (!chanMap.containsKey(currApid)) {
+				chanMap.put(currApid, new MutablePair<Integer, Long>(CoapUtils.getWiFiChannelFromFreq(currFreq), this.currTs));
+
+				channelList.put(currApid, " ");
+			}
+
+			// Only apply policy if the connection to the AP is still available.
+			// 0211 : Not used
+			/*
+			if (CoapEngine.GetDpIdFromAP(currApid) < 0)
+			{
+				System.out.println("MIT: ap_id " + currApid + " connection to AP not avaiable... Doing nothing...");
+				continue;
+			}
+			 */
+
+			//DoubleEntry<Integer, Long> chEntry = chanMap.get(currApid);
+
+			// TODO: add or condition for noise floor.
+			//if ((CoapUtils.GetFrequencyFromChannel(chEntry.getV()) != minFreq) && this.CanChangeChannel(currApid)) {
+			// Above one doesn't handle channel override.
+			double averageUtilNoXmit = apUtilPair.fst, averageXmit = apUtilPair.snd;
+			Pair<Integer, Double> minUtilHopInfo = 
+					getMinFreqUtilHop(currApid, currFreq, fromTsSec, averageUtilNoXmit, averageXmit);
+			double currChannelHopUtil = getCurrChannelUtilFromHop(currApid, currFreq, fromTsSec, averageUtilNoXmit, averageXmit);
+
+			if (minUtilHopInfo == null) {
+				System.out.println("MIT: minUtilHopInfo is null for ap_id: " + currApid + "Doing nothing...");
+				continue;
+			}
+
+			int minFreq = minUtilHopInfo.fst;
+			double minUtil = minUtilHopInfo.snd;
+
+			if (minFreq != currFreq) {
+				System.out.println("MIT: Better channel " + minFreq + " available for ap_id " + currApid +
+						" Possible gain: " + ((currChannelHopUtil - minUtil) * 100.0 / minUtil));
+			}
+
+			channelList.put(currApid, channelList.get(currApid) + " " + CoapUtils.getWiFiChannelFromFreq(minFreq));
+
+			System.out.println("MIT: ap_id " + currApid + " Channel List: " +
+					channelList.get(currApid).substring(Math.max(0, channelList.get(currApid).length() - 100)));
+
+			if ((currFreq != minFreq) && this.canChangeChannel(currApid)) {
+
+				//if (currFinalHopAvgUtil.get(CoapUtils.GetFrequencyFromChannel(chEntry.getV()))
+				// Same above.
+				if (currChannelHopUtil 	< minUtil + CoapConstants.UTIL_CHANGE_THRESHOLD) {
+					System.out.println("MIT: ap_id " + currApid + " util not changing above threshold " + CoapConstants.UTIL_CHANGE_THRESHOLD);
+					continue;
+				}
+
+				System.out.println("MIT: ap_id " + currApid + " " + CoapUtils.getCurrentTime() + " Frequency Val: " + 
+						currFreq + " currFinalHopAvgUtil curr Freq: " +
+						currChannelHopUtil + " min Freq: " + minUtil);
+
+				// 0204 Using 2.4 static type for now. Not using the 5 GHz channel. 
+				boolean isSuccess = policySwitchAPChannel(currApid, CoapUtils.getWiFiChannelFromFreq(minFreq), "g"); //, "g", "y");
+			}
+		}
+	}
+
+	/**
+	 * Use the input time-period and WiFi-channel to return the averaged airtime utilization value. 
+	 * 
+	 * @param currApid
+	 * @param currFreq
+	 * @param fromTsSec
+	 * @param averageUtilNoXmit
+	 * @param averageXmit
+	 * 
+	 * @return averaged airtime utilization value. 
+	 */
+	private double getCurrChannelUtilFromHop(int currApid, int currFreq, long fromTsSec, 
+			double averageUtilNoXmit, double averageXmit) {
+		HashMap<Integer, MutablePair<Integer, Double>> currSumHopAvgUtil = new HashMap<Integer, MutablePair<Integer,Double>>();
+
+		if (!utilHopPolicyMap.containsKey(currApid)) {
+			System.out.println("MIT: Warning! " + CoapUtils.getCurrentTime() + " ap_id " + currApid + " not present in utilHop..");
+			return averageUtilNoXmit;
+		}
+
+		ArrayList<AirtimeUtilStat> utilHopInfo = utilHopPolicyMap.get(currApid);
+
+		// TODO: Assumption is that everything is sorted by time. 
+		for (int i = utilHopInfo.size() - 1; i >= 0; i--) {
+			if (utilHopInfo.get(i).ts < fromTsSec) {
+				break;
+			}
+
+			AirtimeUtilStat currHopStats = utilHopInfo.get(i);
+
+			if (currHopStats.activeTime < CoapConstants.MIN_HOP_ACTIVE_DURATION_MS) {
+				continue;
+			}
+
+			if (!currSumHopAvgUtil.containsKey(currHopStats.frequency)) {
+				//System.out.println("MIT:Current ap_id a1 ab1 " + currApid + " i: " + i +  "...");
+
+				currSumHopAvgUtil.put(currHopStats.frequency, new MutablePair<Integer, Double>
+				(1, currHopStats.busyTime * 1.0 / currHopStats.activeTime));
+
+			} else {
+
+				currSumHopAvgUtil.get(currHopStats.frequency).fst += 1;
+				currSumHopAvgUtil.get(currHopStats.frequency).snd += (currHopStats.busyTime * 1.0 / currHopStats.activeTime);
+			}
+		}
+
+		// Not enough information available to proceed.
+		if (!currSumHopAvgUtil.containsKey(currFreq)) {
+			System.out.println("MIT: Hop utilization information missing for curr_freq: " + currFreq +
+					" for ap_id: " + currApid + "Returning null...");
+			return averageUtilNoXmit;
+		}
+
+		return (currSumHopAvgUtil.get(currFreq).snd / currSumHopAvgUtil.get(currFreq).fst) - averageXmit;
+	}
+
+	/**
+	 * @param currApid
+	 * @param currFreq
+	 * @param fromTsSec
+	 * @param averageUtilNoXmit
+	 * @param averageXmit
+	 * 
+	 * @return the WiFi channel with with the least airtime utilization and the airtime utilization value.
+	 */
+	private Pair<Integer, Double> getMinFreqUtilHop(int currApid, int currFreq, 
+			long fromTsSec, double averageUtilNoXmit, double averageXmit) {
+
+		HashMap<Integer, MutablePair<Integer, Double>> currSumHopAvgUtil = 
+				new HashMap<Integer, MutablePair<Integer,Double>>();
+		HashMap<Integer, Double> currFinalHopAvgUtil = new HashMap<Integer, Double>();
+
+		if (!utilHopPolicyMap.containsKey(currApid)) {
+			System.out.println("MIT: Warning! " + CoapUtils.getCurrentTime() + " ap_id " + currApid + 
+					" not present in utilHop..");
+			return null;
+		}
+
+		ArrayList<AirtimeUtilStat> utilHopInfo = utilHopPolicyMap.get(currApid);
+
+		// TODO: Assumption is that everything is sorted by time. 
+		for (int i = utilHopInfo.size() - 1; i >= 0; i--) {
+			if (utilHopInfo.get(i).ts < fromTsSec) {
+				break;
+			}
+
+			AirtimeUtilStat currHopStats = utilHopInfo.get(i);
+
+			if (currHopStats.activeTime < CoapConstants.MIN_HOP_ACTIVE_DURATION_MS) {
+				continue;
+			}
+
+			if (!currSumHopAvgUtil.containsKey(currHopStats.frequency)) {
+				//System.out.println("MIT:Current ap_id a1 ab1 " + currApid + " i: " + i +  "...");
+
+				currSumHopAvgUtil.put(currHopStats.frequency, new MutablePair<Integer, Double>
+				(1, currHopStats.busyTime * 1.0 / currHopStats.activeTime));
+
+			} else {
+
+				currSumHopAvgUtil.get(currHopStats.frequency).fst += 1;
+				currSumHopAvgUtil.get(currHopStats.frequency).snd += (currHopStats.busyTime * 1.0 / currHopStats.activeTime);
+			}
+		}
+
+		// Not enough information available to proceed.
+		if (!currSumHopAvgUtil.containsKey(currFreq)) {
+			System.out.println("MIT: Hop utilization information missing for curr_freq: " + currFreq +
+					" for ap_id: " + currApid + "Returning null...");
+			return null;
+		}
+
+		for (Integer hopFreq: CoapConstants.FREQ_LIST) {
+			if (currSumHopAvgUtil.containsKey(hopFreq)) {
+				currFinalHopAvgUtil.put(hopFreq, 
+						(currSumHopAvgUtil.get(hopFreq).snd / currSumHopAvgUtil.get(hopFreq).fst) - 
+						(hopFreq == currFreq ? averageXmit : 0.0));
+
+				if (hopFreq == currFreq) {
+					// 0131: Some the hopper can report lower util. Eg. when there is nonwifi continously on.
+					if (averageUtilNoXmit > currFinalHopAvgUtil.get(hopFreq)) {
+						System.out.println("currApid " + currApid + " averageUtil " + averageUtilNoXmit +
+								" more than currSumHopAvgUtil.get(hopFreq).snd " + 
+								currFinalHopAvgUtil.get(hopFreq) + " !!!\n");
+
+						currFinalHopAvgUtil.put(hopFreq, averageUtilNoXmit);
+					}
+				}
+			} else {
+				currFinalHopAvgUtil.put(hopFreq, CoapConstants.DEFAULT_UTIL);
+			}
+		}
+
+		int minFreq = CoapConstants.DEFAULT_FREQ;
+		double minUtil = CoapConstants.DEFAULT_UTIL;
+
+		for (Integer hopFreq: currFinalHopAvgUtil.keySet()) {
+			if (currFinalHopAvgUtil.get(hopFreq) < minUtil) {
+				minFreq = hopFreq;
+				minUtil = currFinalHopAvgUtil.get(hopFreq);
+			}
+		}
+
+		System.out.println("MIT: For ap_id " + currApid + " curr_util: " + averageUtilNoXmit +
+				" curr_xmit: " + averageXmit +
+				" Hop Utils: " + currFinalHopAvgUtil.get(2412) + " " +
+				currFinalHopAvgUtil.get(2437) + " " +
+				//currFinalHopAvgUtil.get(2462) + " currfreq: " + CoapUtils.GetFrequencyFromChannel(chEntry.getV()));
+				currFinalHopAvgUtil.get(2462) + " currfreq: " + currFreq);
+
+		return new Pair<Integer, Double>(minFreq, minUtil);
+	}
+
+	/**
+	 * @param currApid
+	 * @param fromTsSec
+	 * 
+	 * @return pair containing the observed airtime utilization value on the AP's current channel and the airtime utilization
+	 * due to the local transmissions.
+	 */
+	private Pair<Double, Double> GetCurrentAPUtil(int currApid, long fromTsSec)	{
+		AirtimeUtilStat currUtilStats;
+		int countUtils = 0;
+		double averageUtil = 0.0, averageXmit = 0.0;
+
+		ArrayList<AirtimeUtilStat> utilInfo = utilPolicyMap.get(currApid);
+		System.out.println("MIT: " + CoapUtils.getCurrentTime() + " " + fromTsSec + " ap_id " + currApid + " has " +
+				utilInfo.size() + " util entries...");
+
+		if (utilInfo.size() == 0) {
+			return null;
+		}
+		
+		// Going backwards...
+		for (int i = utilInfo.size() - 1; i >= 0; i--) {
+			if (utilInfo.get(i).ts < fromTsSec) {
+
+				break;
+			}
+
+			currUtilStats = utilInfo.get(i);
+			averageUtil += ((currUtilStats.busyTime - currUtilStats.transmitTime) * 1.0 / currUtilStats.activeTime);
+			averageXmit += ((currUtilStats.transmitTime) * 1.0 / currUtilStats.activeTime);
+
+			countUtils ++;
+		}
+
+		if (countUtils < 1) {
+
+			return null;
+		}
+
+		averageUtil /= countUtils;
+		averageXmit /= countUtils;
+
+		return new Pair<Double, Double> (averageUtil, averageXmit);
+	}
+
+	/**
+	 * @param currApid
+	 * 
+	 * @return the most recent known WiFi channel used by the input AP. 
+	 */
+	private int getCurrentAPFreq(int currApid) {
+		ArrayList<AirtimeUtilStat> utilInfo = utilPolicyMap.get(currApid);
+
+		if (utilInfo.size() > 0) {
+			return utilInfo.get(utilInfo.size() - 1).frequency;
+		}
+
+		return -1;
+	}
+
+	/**
+	 * @param ap_id
+	 * 
+	 * @return True, if the AP's channel can be changed due to the low WiFi activity. False otherwise.
+	 */
+	private boolean canChangeChannel(int ap_id) {
+		// TODO: Finalize switching the AP's channel, even if no station is connected. This is to make sure that 
+		// the AP is on the least utilized channel.
+		if (!stationStatsPolicyMap.containsKey(ap_id)) {
+			System.out.println("MIT: CanChangeChannel ap_id " + ap_id + " - stationStats doesn't contain ap_id");
+			return true;
+			//return false;
+		}
+
+		ArrayList<StationStatsPerClient> stationStatsObjectList = stationStatsPolicyMap.get(ap_id);
+		int numClients = stationStatsObjectList.size();
+		MutablePair<Integer,Long> chEntry = chanMap.get(ap_id);
+
+		if (currTs - chEntry.snd < CoapConstants.MIN_CHANNEL_SWITCH_GAP_SEC) {
+			System.out.println("MIT: CanChangeChannel ap_id " + ap_id + " - channel switch happened < " + 
+					CoapConstants.MIN_CHANNEL_SWITCH_GAP_SEC + " seconds ago " + currTs + " " + chEntry.snd);
+			return false;
+		}
+
+		//HashMap<Long, HashMap<String, StationStats> > it = stationStatsPolicyMap.entrySet().iterator();
+		System.out.println("MIT: CanChangeChannel " + CoapUtils.getCurrentTime() + " ap_id " + ap_id + " stationStatsObjectList client size: " + numClients);
+
+		for (int i = 0; i < numClients; ++i) {
+			int inactive_time = CoapConstants.DEFAULT_INACTIVE_DURATION_SEC; // Setting it to a large value to make a station inactive by default.
+
+			StationStatsPerClient object = stationStatsObjectList.get(i);
+			int numEntries = object.statsList.size();
+
+			System.out.println("MIT: CanChangeChannel " + CoapUtils.getCurrentTime() + " ap_id " + ap_id + " client " + object.clientId + " num entries " + numEntries);
+
+			// Search within the most recent instances for activity.
+			for (int j = numEntries - 1; j > Math.max(0, numEntries - 10) ; --j) {
+				StationStats stats = object.statsList.get(j);
+				long ts = object.statsList.get(j).ts;
+
+				inactive_time = (int) (currTs - ts);
+
+				// Currently, only use packet count as an indicator of inactivity.
+				/*
+				if (ts < currTs - CoapConstants.INACTIVE_SEARCH_INTERVAL_SEC) {
+					System.out.println("MIT: CanChangeChannel ap_id " + ap_id + " Inactive time break: " + inactive_time);
+					break;
+				}
+				 */
+
+				if (stats.packetCount > CoapConstants.INACTIVE_PACKET_COUNT_THESHOLD) {
+					System.out.println("MIT: CanChangeChannel " + CoapUtils.getCurrentTime() + " " + 
+							" ap_id " + ap_id + " Inactive time break 2nd cond: " + inactive_time + " " + currTs + " " + ts);
+					break;
+				}
+			}
+
+			if (inactive_time < CoapConstants.INACTIVE_SEARCH_INTERVAL_SEC) {
+				System.out.println("MIT: CanChangeChannel " + CoapUtils.getCurrentTime() + " ap_id " + ap_id + " At least one station active (inactive time: " +
+						inactive_time + "). Returning false..: ");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Prevent very frequent channel switches.
+	 * 
+	 * @param ap_id
+	 * 
+	 * @return True, if the channel can be changed. False, otherwise.
+	 */
+	public boolean canChangeChannelWithGap(int ap_id) {
+		// TODO: Finalize switching the AP's channel, even if no station is connected. This is to make sure that 
+		// the AP is on the least utilized channel.
+
+		MutablePair<Integer,Long> chEntry = chanMap.get(ap_id);
+
+		if (currTs - chEntry.snd < CoapConstants.MIN_CHANNEL_SWITCH_GAP_SEC) {
+			System.out.println("MIT: CanChangeChannelWithGap ap_id " + ap_id + " - channel switch happened < " + 
+					CoapConstants.MIN_CHANNEL_SWITCH_GAP_SEC + " seconds ago " + currTs + " " + chEntry.snd);
+			return false;
+		}
+
+		// TODO: 0216: Moved below to prevent repeated application of channel updates. 
+		if (!stationStatsPolicyMap.containsKey(ap_id)) {
+			System.out.println("MIT: CanChangeChannelWithGap ap_id " + ap_id + " - stationStats doesn't contain ap_id");
+			return true;
+			//return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Class representing the aggregate MAC layer statistics for a WiFi client.
+	 * 
+	 * @author "Ashish Patro"
+	 *
+	 */
+	class StationLoad {
+		double totalPackets = 0.0, totalRetries = 0.0, retryRate = 0.0, avgPhyRate = 0.0;
+
+		public StationLoad(double totalPackets, double totalRetries, double retryRate, double avgPhyRate) {
+			this.totalPackets = totalPackets;
+			this.totalRetries = totalRetries;
+			this.retryRate = retryRate;
+			this.avgPhyRate = avgPhyRate;
+		}
+	}
+}
+
