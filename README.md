@@ -12,5 +12,4 @@ Feature Highlights:
 - Support for OpenStack Quantum cloud orchestration platform}
 
 To download a pre-built VM appliance, access documentation, and sign up for the mailing list, go to:
-
   http://www.projectfloodlight.org/floodlight
