@@ -124,20 +124,23 @@ public class CoapManager implements Runnable {
 				 *  card on each AP to estimate the airtime utilization on different channels for this purpose.
 				 *  The emulates the use of nearby COAP APs to estimate airtime utilization on different channels. 
 				 */
-				//utilHopAwareChannelConfiguration();
+			//	System.out.println("MIT:Dongjin 1");
 				
 				// TODO: Add a bnew configuration function.
-				// if time > 1:20 pm and time < 1:40 pm, if channel != 6, set channel = 6.
-
+				// 1.if time > 1:20 pm and time < 1:40 pm,if channel != 6, set channel = 6.
+				// 2.if util > 40%, change channel to 11;
 				
-				// if util > 40%, change channel to 11;
+				utilHopAwareChannelConfiguration();				
+				//testChannelCongiruation();
+				//testByUtilChannelCongiruation();
+				//System.out.println("MIT:Dongjin 2");				
 				
-				
-				
+								
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
+			//System.out.println("MIT:Dongjin 3");
 			/**
 			 * Periodically clear the in-memory statistics to bound the memory overhead.
 			 */
@@ -182,19 +185,138 @@ public class CoapManager implements Runnable {
 
 		return isSuccess;
 	}
+	/** Added by Dongjin
+	 *  Test code implementation
+	 */
+	private void testChannelCongiruation() {
+		for (Integer currApid: utilPolicyMap.keySet()) {
+			System.out.println("Dongjin : 2-1");
+			long fromTsSec = System.currentTimeMillis() / 1000 - CoapConstants.UTIL_AVERAGE_INTERVAL_SEC;
+			
+			// Added by Dongjin : start 
+			if(fromTsSec > 1437432253 )
+			{	
+				System.out.println("Dongjin: 2-2 : "+ String.valueOf(fromTsSec));
+			//	continue;
+			}
+			// Added by Dongjin : End
+						
+			int currFreq = getCurrentAPFreq(currApid);				
+			System.out.println("Dongjin: 2-3 : Current AP Freq is "+ String.valueOf(currFreq));			
+			int minFreq = 2407 + (6*5); //channel 6
+			if (currFreq == minFreq)
+			{
+				System.out.println("Dongjin: Current channel is" + minFreq + " no need to change Channel");
+				continue;
+			}
+			
+			boolean isSuccess = policySwitchAPChannel(currApid, CoapUtils.getWiFiChannelFromFreq(minFreq), "g"); //, "g", "y");
+			System.out.println("Dongjin: 2-4: Current channel is" + CoapUtils.getWiFiChannelFromFreq(currFreq) + "Now, it is changing to Channel 6");			
+		}
+	
+	}
+	/** Added by Dongjin
+	 *  Test code implementation
+	 */
+	private void testByUtilChannelCongiruation() {
+		for (Integer currApid: utilPolicyMap.keySet()) {
+			System.out.println("Dongjin : 1-1");
+			long fromTsSec = System.currentTimeMillis() / 1000 - CoapConstants.UTIL_AVERAGE_INTERVAL_SEC;
+						
+			// Don't do anything if we don't have any utilization information.
+			Pair<Double, Double> apUtilPair = GetCurrentAPUtil(currApid, fromTsSec);
+			int currFreq = getCurrentAPFreq(currApid);
 
+			if (apUtilPair == null || currFreq < 0) {
+				System.out.println("MIT: " + CoapUtils.getCurrentTime() + " ap_id " + currApid + " has no util entries, doing nothing...");
+				continue;
+			}
+
+			// Initializing the current channel map and debug channel list.
+			if (!chanMap.containsKey(currApid)) {
+				chanMap.put(currApid, new MutablePair<Integer, Long>(CoapUtils.getWiFiChannelFromFreq(currFreq), this.currTs));
+
+				channelList.put(currApid, " ");
+			}
+
+			// Only apply policy if the connection to the AP is still available.
+			// 0211 : Not used
+			/*
+			if (CoapEngine.GetDpIdFromAP(currApid) < 0)
+			{
+				System.out.println("MIT: ap_id " + currApid + " connection to AP not avaiable... Doing nothing...");
+				continue;
+			}
+			 */
+
+			//DoubleEntry<Integer, Long> chEntry = chanMap.get(currApid);
+
+			// TODO: add or condition for noise floor.
+			//if ((CoapUtils.GetFrequencyFromChannel(chEntry.getV()) != minFreq) && this.CanChangeChannel(currApid)) {
+			// Above one doesn't handle channel override.
+			double averageUtilNoXmit = apUtilPair.fst, averageXmit = apUtilPair.snd;
+			Pair<Integer, Double> minUtilHopInfo = 
+					getMinFreqUtilHop(currApid, currFreq, fromTsSec, averageUtilNoXmit, averageXmit);
+			double currChannelHopUtil = getCurrChannelUtilFromHop(currApid, currFreq, fromTsSec, averageUtilNoXmit, averageXmit);
+			
+			if (minUtilHopInfo == null) {
+				System.out.println("MIT: minUtilHopInfo is null for ap_id: " + currApid + "Doing nothing...");
+				continue;
+			}
+
+			int minFreq = minUtilHopInfo.fst;
+			System.out.println("Dongjin : minUtilHopInfo.fst ="+ minUtilHopInfo.fst);
+			//int minFreq = 2407 + (6*5); //channel 6
+			double minUtil = minUtilHopInfo.snd;
+			System.out.println("Dongjin : minUtilHopInfo.snd ="+ minUtil);
+			System.out.println("MIT: Dongjin-1-1-1: Current Utilization rate is"+currChannelHopUtil);
+			
+			if(currChannelHopUtil > 0.4)			{
+				System.out.println("Dongjin : 1-1-2");
+				boolean isSuccess = policySwitchAPChannel(currApid, CoapUtils.getWiFiChannelFromFreq(minFreq), "g"); //, "g", "y");
+				continue;
+			}
+			/*
+			if (minFreq != currFreq) {
+				System.out.println("MIT: Better channel " + minFreq + " available for ap_id " + currApid +
+						" Possible gain: " + ((currChannelHopUtil - minUtil) * 100.0 / minUtil));
+			}
+
+			channelList.put(currApid, channelList.get(currApid) + " " + CoapUtils.getWiFiChannelFromFreq(minFreq));
+
+			System.out.println("MIT: ap_id " + currApid + " Channel List: " +
+					channelList.get(currApid).substring(Math.max(0, channelList.get(currApid).length() - 100)));
+
+			if ((currFreq != minFreq) && this.canChangeChannel(currApid)) {
+
+				//if (currFinalHopAvgUtil.get(CoapUtils.GetFrequencyFromChannel(chEntry.getV()))
+				// Same above.
+				if (currChannelHopUtil 	< minUtil + CoapConstants.UTIL_CHANGE_THRESHOLD) {
+					System.out.println("MIT: ap_id " + currApid + " util not changing above threshold " + CoapConstants.UTIL_CHANGE_THRESHOLD);
+					continue;
+				}
+
+				System.out.println("MIT: ap_id " + currApid + " " + CoapUtils.getCurrentTime() + " Frequency Val: " + 
+						currFreq + " currFinalHopAvgUtil curr Freq: " +
+						currChannelHopUtil + " min Freq: " + minUtil);
+
+				// 0204 Using 2.4 static type for now. Not using the 5 GHz channel. 
+				boolean isSuccess = policySwitchAPChannel(currApid, CoapUtils.getWiFiChannelFromFreq(minFreq), "g"); //, "g", "y");
+			}*/
+		}
+	}
 	/**
 	 * Use the recent airtime utilization statistics across different channels to choose the least utilized channel per-AP.
 	 * 
 	 * To simulate the usage airtime utilization information from nearby APs on different channels, each COAP uses
 	 * a secondary wireless card to periodically hop across different channels in a round robin fashion (500 ms interval)
-	 * and collect the airtime utilization statistics for each channel.
+	 * and collect the airtime utilization statistics for each channel.d
 	 */
 	private void utilHopAwareChannelConfiguration() {
 		for (Integer currApid: utilPolicyMap.keySet()) {
-
+			System.out.println("Dongjin : 2-1");
 			long fromTsSec = System.currentTimeMillis() / 1000 - CoapConstants.UTIL_AVERAGE_INTERVAL_SEC;
-
+						
 			// Don't do anything if we don't have any utilization information.
 			Pair<Double, Double> apUtilPair = GetCurrentAPUtil(currApid, fromTsSec);
 			int currFreq = getCurrentAPFreq(currApid);

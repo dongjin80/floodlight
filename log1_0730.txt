@@ -1,0 +1,916 @@
+Starting floodlight server ...
+2015-07-30 13:53:12.315 INFO  [n.f.c.m.FloodlightModuleLoader] Loading default modules
+2015-07-30 13:53:12.513 INFO  [n.f.c.i.Controller] Controller role set to MASTER
+2015-07-30 13:53:12.516 INFO  [n.f.c.i.Controller] Flush switches on reconnect -- Disabled
+2015-07-30 13:53:12.861 ERROR [o.s.s.i.c.DelegatingCCProvider] Failed to initialize provider org.sdnplatform.sync.internal.config.SyncStoreCCProvider
+org.sdnplatform.sync.error.PersistException: Could not initialize persistent storage
+	at org.sdnplatform.sync.internal.store.JavaDBStorageEngine.<init>(JavaDBStorageEngine.java:107) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.StoreRegistry.register(StoreRegistry.java:116) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.SyncManager.registerPersistentStore(SyncManager.java:184) [floodlight.jar:na]
+	at org.sdnplatform.sync.internal.config.SyncStoreCCProvider.init(SyncStoreCCProvider.java:85) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.config.DelegatingCCProvider.init(DelegatingCCProvider.java:37) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.SyncManager.init(SyncManager.java:489) [floodlight.jar:na]
+	at net.floodlightcontroller.core.module.FloodlightModuleLoader.initModules(FloodlightModuleLoader.java:436) [floodlight.jar:na]
+	at net.floodlightcontroller.core.module.FloodlightModuleLoader.loadModulesFromList(FloodlightModuleLoader.java:353) [floodlight.jar:na]
+	at net.floodlightcontroller.core.module.FloodlightModuleLoader.loadModulesFromList(FloodlightModuleLoader.java:362) [floodlight.jar:na]
+	at net.floodlightcontroller.core.module.FloodlightModuleLoader.loadModulesFromConfig(FloodlightModuleLoader.java:200) [floodlight.jar:na]
+	at net.floodlightcontroller.core.Main.main(Main.java:62) [floodlight.jar:na]
+Caused by: java.sql.SQLException: DDL is not permitted for a read-only connection, user or database.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.wrapInSQLException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.TransactionResourceImpl.handleException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.EmbedConnection.handleException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.ConnectionChild.handleException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.EmbedStatement.executeStatement(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.EmbedStatement.execute(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.EmbedStatement.execute(Unknown Source) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.store.JavaDBStorageEngine.initTable(JavaDBStorageEngine.java:380) ~[floodlight.jar:na]
+	at org.sdnplatform.sync.internal.store.JavaDBStorageEngine.<init>(JavaDBStorageEngine.java:105) ~[floodlight.jar:na]
+	... 10 common frames omitted
+Caused by: org.apache.derby.impl.jdbc.EmbedSQLException: DDL is not permitted for a read-only connection, user or database.
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source) ~[floodlight.jar:na]
+	... 21 common frames omitted
+Caused by: org.apache.derby.iapi.error.StandardException: DDL is not permitted for a read-only connection, user or database.
+	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.conn.GenericAuthorizer.authorize(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.execute.GenericResultSetFactory.getDDLResultSet(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.execute.ConstantActionActivation.execute(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.GenericActivationHolder.execute(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.GenericPreparedStatement.executeStmt(Unknown Source) ~[floodlight.jar:na]
+	at org.apache.derby.impl.sql.GenericPreparedStatement.execute(Unknown Source) ~[floodlight.jar:na]
+	... 15 common frames omitted
+2015-07-30 13:53:12.934 INFO  [n.f.l.i.LinkDiscoveryManager] Setting autoportfast feature to OFF
+2015-07-30 13:53:12.969 INFO  [o.s.s.i.c.FallbackCCProvider] Cluster not yet configured; using fallback local configuration
+2015-07-30 13:53:12.970 INFO  [o.s.s.i.SyncManager] [32767] Updating sync configuration ClusterConfig [allNodes={32767=Node [hostname=localhost, port=6642, nodeId=32767, domainId=32767]}, authScheme=CHALLENGE_RESPONSE, keyStorePath=/etc/floodlight/auth_credentials.jceks, keyStorePassword is unset]
+2015-07-30 13:53:13.9 INFO  [o.s.s.i.r.RPCService] Listening for internal floodlight RPC on localhost/127.0.0.1:6642
+MIT: Going to sleep now.. 1438282393
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:13.292 INFO  [n.f.c.i.Controller] Listening for switch connections on 0.0.0.0/0.0.0.0:6633
+2015-07-30 13:53:13.976 INFO  [n.f.c.i.OFChannelHandler] New switch connection from /128.105.22.140:33673
+2015-07-30 13:53:14.18 INFO  [n.f.c.i.OFChannelHandler] Switch OFSwitchBase [/128.105.22.140:33673 DPID[00:00:00:23:20:ac:15:8c]] bound to class class net.floodlightcontroller.core.internal.OFSwitchImpl, writeThrottle=false, description Switch Desc - Vendor: Stanford University  Model: Reference Userspace Switch  Make: owrt02 pid=15212  Version: 1.0.0  S/N: None
+2015-07-30 13:53:14.23 INFO  [n.f.c.OFSwitchBase] Clearing all flows on switch OFSwitchBase [/128.105.22.140:33673 DPID[00:00:00:23:20:ac:15:8c]]
+2015-07-30 13:53:14.25 WARN  [n.f.c.i.C.s.notification] Switch 00:00:00:23:20:ac:15:8c connected.
+2015-07-30 13:53:14.25 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:14.37 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:16.105 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:16.106 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:16.106 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:16.335 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 228 ms.
+2015-07-30 13:53:16.892 INFO  [n.f.j.JythonServer] Starting DebugServer on :6655
+2015-07-30 13:53:17.107 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:17.107 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282386, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:17.107 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282386, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:17.108 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;-100 105204 63112 50954 1616 2412 1438282386 809201510
+2015-07-30 13:53:17.108 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282386 -95;2437 499 432 343 0 1438282386 -95;2462 491 421 368 0 1438282386 -95
+2015-07-30 13:53:17.108 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:17.108 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:17.108 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:17.108 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:17.109 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:17.109 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 1438282398
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:18 1438282383 ap_id 1140 has 1 util entries...
+MIT: For ap_id 1140 curr_util: 0.5845405117676133 curr_xmit: 0.015360632675563667 Hop Utils: 0.6553960135412052 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6553960135412052
+Dongjin : 1-1-2
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:18.113 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:18 clear_ts: 1438282393 currTs: 1438282398
+MIT: Going to sleep now.. 1438282398
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:20.109 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:20.109 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:20.109 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:53:20.364 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 255 ms.
+2015-07-30 13:53:21.109 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:21.109 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282390, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:21.110 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282390, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:21.110 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;61 3999 2522 1974 70 2412 1438282390 809201510
+2015-07-30 13:53:21.110 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282390 -95;2437 499 432 343 0 1438282390 -95;2462 491 421 368 0 1438282390 -95
+2015-07-30 13:53:21.110 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:21.110 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:21.110 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:21.110 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:21.110 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:21.110 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 13
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:23 1438282388 ap_id 1140 has 2 util entries...
+MIT: For ap_id 1140 curr_util: 0.6131532883220805 curr_xmit: 0.017504376094023506 Hop Utils: 0.6532522701227453 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6532522701227453
+Dongjin : 1-1-2
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:23.114 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:23 clear_ts: 1438282393 currTs: 1438282403
+MIT: Going to sleep now.. 1438282403
+2015-07-30 13:53:24.110 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:24.110 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:24.111 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:53:24.630 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 519 ms.
+2015-07-30 13:53:25.111 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:25.111 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282394, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:25.111 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282394, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:25.111 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;60 4270 2638 2093 54 2412 1438282394 809201510
+2015-07-30 13:53:25.111 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282394 -95;2437 499 432 343 0 1438282394 -95;2462 491 421 368 0 1438282394 -95
+2015-07-30 13:53:25.112 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:25.112 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:25.112 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:25.112 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:25.112 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:25.112 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:27.938 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:27.958 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:28.112 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:28.112 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:28.113 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:28 1438282393 ap_id 1140 has 3 util entries...
+MIT: For ap_id 1140 curr_util: 0.6051522248243559 curr_xmit: 0.012646370023419205 Hop Utils: 0.6581102761933497 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6581102761933497
+Dongjin : 1-1-2
+2015-07-30 13:53:28.115 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:28.115 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:28.116 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:28.116 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:28.116 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:28.116 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:28 clear_ts: 1438282393 currTs: 1438282408
+MIT: Going to sleep now.. 1438282408
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:29.629 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1516 ms.
+2015-07-30 13:53:30.113 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:30.113 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282398, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:30.113 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282398, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:30.113 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;62 4978 3192 2548 59 2412 1438282399 543629361
+2015-07-30 13:53:30.113 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282399 -95;2437 499 432 343 0 1438282399 -95;2462 491 421 368 0 1438282399 -95
+2015-07-30 13:53:30.114 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:30.114 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:30.114 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:30.114 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:30.114 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:30.114 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:33.114 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:33.115 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:33.115 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:33 1438282398 ap_id 1140 has 4 util entries...
+MIT: For ap_id 1140 curr_util: 0.629369224588188 curr_xmit: 0.0118521494576135 Hop Utils: 0.6589044967591554 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6589044967591554
+Dongjin : 1-1-2
+2015-07-30 13:53:33.117 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:33.117 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:33.117 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:33.117 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:33.118 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:33.118 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:33 clear_ts: 1438282393 currTs: 1438282413
+MIT: Going to sleep now.. 1438282413
+2015-07-30 13:53:34.644 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1529 ms.
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:35.115 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:35.116 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282403, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:35.116 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282403, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:35.116 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;59 4989 3009 2395 57 2412 1438282404 543629361
+2015-07-30 13:53:35.116 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282404 -95;2437 499 432 343 0 1438282404 -95;2462 491 421 368 0 1438282404 -95
+2015-07-30 13:53:35.116 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:35.116 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:35.116 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:35.117 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:35.117 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:35.117 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:38.117 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:38.117 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:38.118 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:38 1438282403 ap_id 1140 has 5 util entries...
+MIT: For ap_id 1140 curr_util: 0.5917017438364401 curr_xmit: 0.011425135297654841 Hop Utils: 0.659331510919114 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.659331510919114
+Dongjin : 1-1-2
+2015-07-30 13:53:38.119 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:38.119 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:38.119 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:38.119 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:38.119 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:38.120 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:38 clear_ts: 1438282393 currTs: 1438282418
+MIT: Going to sleep now.. 1438282418
+2015-07-30 13:53:39.639 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1521 ms.
+2015-07-30 13:53:40.118 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:40.118 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282408, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:40.118 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282408, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:40.118 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;57 4984 2957 2349 70 2412 1438282409 543629361
+2015-07-30 13:53:40.118 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282409 -95;2437 499 432 343 0 1438282409 -95;2462 491 421 368 0 1438282409 -95
+2015-07-30 13:53:40.119 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:40.119 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:40.119 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:40.119 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:40.119 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:40.119 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:42.941 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:42.979 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:43.119 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:43.120 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:53:43.120 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:43 1438282408 ap_id 1140 has 6 util entries...
+MIT: For ap_id 1140 curr_util: 0.5792536115569823 curr_xmit: 0.014044943820224719 Hop Utils: 0.6567117023965442 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6567117023965442
+Dongjin : 1-1-2
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:43.121 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:43 clear_ts: 1438282393 currTs: 1438282423
+MIT: Going to sleep now.. 1438282423
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:44.621 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1501 ms.
+2015-07-30 13:53:45.120 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:45.120 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282413, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:45.120 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282413, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:45.120 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;61 4983 3131 2478 70 2412 1438282414 543629361
+2015-07-30 13:53:45.121 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282414 -95;2437 499 432 343 0 1438282414 -95;2462 491 421 368 0 1438282414 -95
+2015-07-30 13:53:45.121 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:45.121 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:45.121 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:45.121 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:45.121 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:45.121 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:48.121 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:53:48.122 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+2015-07-30 13:53:48.122 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+MIT: 2015-07-30 13:53:48 1438282413 ap_id 1140 has 7 util entries...
+MIT: For ap_id 1140 curr_util: 0.6142885811759984 curr_xmit: 0.014047762392133253 Hop Utils: 0.6567088838246357 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6567088838246357
+Dongjin : 1-1-2
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:48.123 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:48 clear_ts: 1438282393 currTs: 1438282428
+MIT: Going to sleep now.. 1438282428
+2015-07-30 13:53:49.635 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1512 ms.
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:50.122 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:50.123 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282418, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:50.123 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282418, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:50.123 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;61 4998 3135 2449 64 2412 1438282419 543629361
+2015-07-30 13:53:50.123 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282419 -95;2437 499 432 343 0 1438282419 -95;2462 491 421 368 0 1438282419 -95
+2015-07-30 13:53:50.123 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:50.123 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:50.123 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:50.123 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:50.123 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:50.124 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 19
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+2015-07-30 13:53:53.124 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+MIT: 2015-07-30 13:53:53 1438282418 ap_id 1140 has 8 util entries...
+2015-07-30 13:53:53.124 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+MIT: For ap_id 1140 curr_util: 0.6144457783113245 curr_xmit: 0.012805122048819529 Hop Utils: 0.6579515241679493 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6579515241679493
+Dongjin : 1-1-2
+2015-07-30 13:53:53.124 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:53.124 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:53:53.125 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:53:53.125 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:53:53.125 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:53:53.125 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:53:53.125 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:53 clear_ts: 1438282393 currTs: 1438282433
+MIT: Going to sleep now.. 1438282433
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:54.646 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1521 ms.
+2015-07-30 13:53:55.125 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:55.125 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282423, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:55.125 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282423, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:55.125 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;62 4990 3165 2543 60 2412 1438282424 543629361
+2015-07-30 13:53:55.125 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282424 -95;2437 499 432 343 0 1438282424 -95;2462 491 421 368 0 1438282424 -95
+2015-07-30 13:53:55.125 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:55.126 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:55.126 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:55.126 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:55.126 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:55.126 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:53:57.944 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:53:57.999 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:53:58 1438282423 ap_id 1140 has 9 util entries...
+MIT: For ap_id 1140 curr_util: 0.6222444889779559 curr_xmit: 0.012024048096192385 Hop Utils: 0.6587325981205765 0.8657314629258517 0.8574338085539714 currfreq: 2412
+2015-07-30 13:53:58.126 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6587325981205765
+Dongjin : 1-1-2
+2015-07-30 13:53:58.126 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:53:58.126 WARN  [n.f.c.c.ConfigManager] Warning!! Could not apply configuration 'bash /etc/wah/switch_channel.sh 1 g n' to ap_id 1140 because AP is disconnected
+MIT: nonwifi mitigation ap_id 1140 cmd send unsuccessful
+2015-07-30 13:53:58.126 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:53:58 clear_ts: 1438282393 currTs: 1438282438
+MIT: Going to sleep now.. 1438282438
+2015-07-30 13:53:58.127 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:53:58.372 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 245 ms.
+2015-07-30 13:53:59.127 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:53:59.127 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282428, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:59.127 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282428, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:53:59.127 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;59 3726 2286 1798 60 2412 1438282428 809201510
+2015-07-30 13:53:59.127 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282428 -95;2437 499 432 343 0 1438282428 -95;2462 491 421 368 0 1438282428 -95
+2015-07-30 13:53:59.128 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:53:59.128 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:53:59.128 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:53:59.128 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:53:59.128 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:53:59.128 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:02.128 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:02.129 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:02.129 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:02.373 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 244 ms.
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 15
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:03 1438282428 ap_id 1140 has 10 util entries...
+MIT: For ap_id 1140 curr_util: 0.5974235104669887 curr_xmit: 0.01610305958132045 Hop Utils: 0.6546535866354485 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6546535866354485
+Dongjin : 1-1-2
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:03.128 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:03 clear_ts: 1438282393 currTs: 1438282443
+MIT: Going to sleep now.. 1438282443
+2015-07-30 13:54:03.129 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:03.129 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282432, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:03.129 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282432, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:03.129 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;60 3989 2458 1956 64 2412 1438282432 809201510
+2015-07-30 13:54:03.130 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282432 -95;2437 499 432 343 0 1438282432 -95;2462 491 421 368 0 1438282432 -95
+2015-07-30 13:54:03.130 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:03.130 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:03.130 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:03.130 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:03.130 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:03.131 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:06.131 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:06.131 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:06.132 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:54:06.382 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 250 ms.
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:07.132 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282436, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:07.132 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282436, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:07.132 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;66 3991 2733 2101 68 2412 1438282436 809201510
+2015-07-30 13:54:07.132 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282436 -95;2437 499 432 343 0 1438282436 -95;2462 491 421 368 0 1438282436 -95
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:07.132 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:07.133 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 16
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:08 1438282433 ap_id 1140 has 12 util entries...
+currApid 1140 averageUtil 0.6677524429967426 more than currSumHopAvgUtil.get(hopFreq).snd 0.6537183099601916 !!!
+
+MIT: For ap_id 1140 curr_util: 0.6677524429967426 curr_xmit: 0.0170383362565773 Hop Utils: 0.6677524429967426 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6537183099601916
+Dongjin : 1-1-2
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:08.130 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:08 clear_ts: 1438282393 currTs: 1438282448
+MIT: Going to sleep now.. 1438282448
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:10.133 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:10.133 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:10.133 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:54:10.372 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 238 ms.
+2015-07-30 13:54:11.133 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:11.134 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282440, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:11.134 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282440, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:11.134 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;54 3996 2231 1839 35 2412 1438282440 809201510
+2015-07-30 13:54:11.134 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282440 -95;2437 499 432 343 0 1438282440 -95;2462 491 421 368 0 1438282440 -95
+2015-07-30 13:54:11.134 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:11.134 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:11.134 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:11.134 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:11.134 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:11.134 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:12.947 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:54:13.18 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 13
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:13 1438282438 ap_id 1140 has 13 util entries...
+MIT: For ap_id 1140 curr_util: 0.5495495495495496 curr_xmit: 0.008758758758758759 Hop Utils: 0.6619978874580101 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6619978874580101
+Dongjin : 1-1-2
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:13.132 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:13 clear_ts: 1438282393 currTs: 1438282453
+MIT: Going to sleep now.. 1438282453
+2015-07-30 13:54:14.134 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:14.135 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:14.135 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:54:14.647 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 512 ms.
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:15.135 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:15.135 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282444, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:15.135 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282444, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:15.135 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;61 4265 2698 2152 60 2412 1438282444 809201510
+2015-07-30 13:54:15.136 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282444 -95;2437 499 432 343 0 1438282444 -95;2462 491 421 368 0 1438282444 -95
+2015-07-30 13:54:15.136 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:15.136 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:15.136 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:15.136 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:15.136 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:15.136 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:18 1438282443 ap_id 1140 has 14 util entries...
+MIT: For ap_id 1140 curr_util: 0.6185228604923798 curr_xmit: 0.01406799531066823 Hop Utils: 0.6566886509061006 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6566886509061006
+Dongjin : 1-1-2
+2015-07-30 13:54:18.133 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:18.133 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:18.133 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:18.133 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:18.133 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:18.134 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:18 clear_ts: 1438282393 currTs: 1438282458
+MIT: Going to sleep now.. 1438282458
+2015-07-30 13:54:18.136 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:18.137 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:18.137 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:54:19.657 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1520 ms.
+2015-07-30 13:54:20.137 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:20.137 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282449, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:20.137 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282449, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:20.137 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;56 4995 2904 2345 64 2412 1438282449 809201510
+2015-07-30 13:54:20.137 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282449 -95;2437 499 432 343 0 1438282449 -95;2462 491 421 368 0 1438282449 -95
+2015-07-30 13:54:20.138 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:20.138 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:20.138 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:20.138 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:20.138 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:20.138 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:23 1438282448 ap_id 1140 has 15 util entries...
+MIT: For ap_id 1140 curr_util: 0.5685685685685685 curr_xmit: 0.012812812812812813 Hop Utils: 0.6579438334039561 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6579438334039561
+Dongjin : 1-1-2
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:23.135 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:23 clear_ts: 1438282393 currTs: 1438282463
+MIT: Going to sleep now.. 1438282463
+2015-07-30 13:54:23.138 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:23.138 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:23.139 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:24.642 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1503 ms.
+2015-07-30 13:54:25.139 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:25.139 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282454, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:25.139 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282454, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:25.139 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;58 4981 2997 2336 68 2412 1438282454 809201510
+2015-07-30 13:54:25.139 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282454 -95;2437 499 432 343 0 1438282454 -95;2462 491 421 368 0 1438282454 -95
+2015-07-30 13:54:25.139 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:25.139 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:25.139 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:25.140 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:25.140 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:25.140 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 1 Time: 0
+Entries_prepared: 3 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:27.949 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+2015-07-30 13:54:28.38 WARN  [n.f.l.i.LinkDiscoveryManager] Port 00:00:00:23:20:ac:15:8c/1 has zero hareware addressoverwrite with lower 6 bytes of dpid
+MIT: executing PolicyEngine in-memory
+MIT: lag in data between AP and controller = 14
+MIT: utilPolicyMap size: 1
+MIT: utilHopPolicyMap size: 1
+MIT: stationStatsPolicyMap size: 0
+MIT: higherLayerPolicyMap size: 0
+MIT:Dongjin 1
+Dongjin : 1-1
+MIT: 2015-07-30 13:54:28 1438282453 ap_id 1140 has 16 util entries...
+MIT: For ap_id 1140 curr_util: 0.5880345312186308 curr_xmit: 0.013651877133105802 Hop Utils: 0.6571047690836631 0.8657314629258517 0.8574338085539714 currfreq: 2412
+MIT: Dongjin-1-1-1: Current Utilization rate is0.6571047690836631
+Dongjin : 1-1-2
+2015-07-30 13:54:28.136 INFO  [n.f.c.c.ConfigManager] Switching channel of ap 1140 to channel1 type g
+2015-07-30 13:54:28.136 INFO  [n.f.c.c.ConfigManager] SendCommand 'bash /etc/wah/switch_channel.sh 1 g n' for ap 1140 and switchId 150872003980
+2015-07-30 13:54:28.136 INFO  [n.f.c.c.ConfigManager] Trying wireless config for AP with switchId 150872003980
+2015-07-30 13:54:28.136 INFO  [n.f.c.c.ConfigManager] Start sending config 'bash /etc/wah/switch_channel.sh 1 g n' to switchid 150872003980
+2015-07-30 13:54:28.136 INFO  [n.f.c.c.ConfigManager] Sending config to AP 150872003980
+2015-07-30 13:54:28.137 INFO  [n.f.c.c.ConfigManager] Sent config to AP 150872003980
+MIT: nonwifi mitigation ap_id 1140 cmd send successful
+MIT:Dongjin 2
+MIT:Dongjin 3
+MIT: ClearMaps: 2015-07-30 13:54:28 clear_ts: 1438282393 currTs: 1438282468
+MIT: Going to sleep now.. 1438282468
+2015-07-30 13:54:28.140 INFO  [n.f.c.c.s.MainStatsManager] MainStatsManager: Sending data poll commands to APs
+2015-07-30 13:54:28.140 INFO  [n.f.c.c.s.MainStatsManager] Found /128.105.22.140:33673 switchDpid: 150872003980
+2015-07-30 13:54:28.140 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] pollStatsBitmap: 30144 0
+2015-07-30 13:54:29.645 INFO  [n.f.c.c.s.MainStatsManager$StatsQueryThread] Polling for apId 1140 took 1504 ms.
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+Entries_prepared: 0 Time: 0
+commiting to db 
+Sleeping for: 3000ms
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] Got 2 NICs for apId 1140
+2015-07-30 13:54:30.141 INFO  [n.f.c.c.s.CoapDataManager] Got 0 OFApinfoStatisticsReply [apMacId=cf139615b97c5c8468, timestamp=1438282459, nicCount=0, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:30.141 INFO  [n.f.c.c.s.CoapDataManager] Got 1 OFApinfoStatisticsReply [apMacId=430954d35fb4d01332, timestamp=1438282459, nicCount=1, is2GhzSupported=1, is5GhzSupported=1, is2GhzHT20Supported=0, is2GhzHT40Supported=0, is5GhzHT20Supported=0, is5GhzHT40Supported=0]
+2015-07-30 13:54:30.141 INFO  [n.f.c.c.s.CoapDataManager] Got 0 util;64 4989 3281 2640 62 2412 1438282459 809201510
+2015-07-30 13:54:30.141 INFO  [n.f.c.c.s.CoapDataManager] utilhop : stats for ap 1140 rest: 03;2412 489 328 284 0 1438282459 -95;2437 499 432 343 0 1438282459 -95;2462 491 421 368 0 1438282459 -95
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] Got 0 station instances for apId 1140
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] beaconStats is null for apId 1140
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] Got 0 client instances for apId 1140
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] Got 0 nonWiFi instances for apId 1140
+2015-07-30 13:54:30.141 WARN  [n.f.c.c.s.CoapDataManager] Got 0 passive instances for apId 1140
+2015-07-30 13:54:30.141 INFO  [n.f.c.c.s.CoapDataManager] skipping stats type: trafficinfo for ap: 1140 debugType: trafficinfoStats 0
